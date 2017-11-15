@@ -29,7 +29,7 @@ for (var i = 1; i <= numbersLength; i++){
   numbers.push(i);
 }
 
-searchNumbers( numbers, 1);
+searchNumbers( numbers, 301);
 
 //searchNumbers(ravenLines, 'Tempter');
 
@@ -62,25 +62,32 @@ searchNumbers( numbers, 1);
 
 
 function searchNumbers(arr, val) {
-  //var searchArray = arr;
   var min = 0;
   var max = arr.length - 1;
   var previousMax = max;
-  var x = 1;
+  //don't process if number is out of range
   if (val < arr[min] || val > arr[max]) return console.log('value not found');
-  while(min < max){
-  //while(x < 16){
+  //start in the middle of the array
+  max = Math.ceil(max / 2);
+  //When the min and max indexs are equal, the match was found
+  while(min < max)
+    //if the search value is less than the value at max index
     if (val < arr[max]) {
       previousMax = max;
+      //split the difference between the min and max
       max = Math.ceil(((max - 1) - min) / 2) + min;
+      //if the value is greater than the array value at the max index
+      //then search the other half
+      if (val > arr[max]){
+        min = max + 1;
+        max = previousMax;
+      }
+      //if the value is greater than the array value at the max index
+      //then search the other half
     } else {
       min = max;
       max = previousMax;
     }
-    console.log('x: ', x);
-    console.log('value: ' , val, 'max: ', arr[max], 'min: ', arr[min]);
-    console.log('value: ' , val, 'max index: ', max, 'min index: ', min);
-    x++;
   }
   return console.log('Array Value: ', arr[max]);
 
